@@ -31,6 +31,20 @@ class TaskController extends Controller
         return view('tasks.index', compact('tasks'));
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show($id)
+    {
+        $task = $this->task->find($id);
+        if (!$task) {
+            abort(404, 'не нашел');
+        }
+
+        return view('tasks.detail', compact('task'));
+    }
+
     public function create()
     {
         return view('tasks.add');
@@ -55,5 +69,13 @@ class TaskController extends Controller
     public function update()
     {
         return redirect()->back()->with('success', 'cool');
+    }
+
+    public function destroy($id)
+    {
+        $task = $this->task->find($id);
+        if ($task) {
+            $task->delete();
+        }
     }
 }

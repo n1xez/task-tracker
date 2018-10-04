@@ -20,5 +20,6 @@
         @yield('content')
     </div>
 </div>
+@include('layouts.components.scripts')
 </body>
 </html>
