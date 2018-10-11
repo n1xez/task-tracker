@@ -3,13 +3,13 @@
 @section('title', 'Tasks')
 
 @section('content')
-    {{ Form::open([
-        'url' => 'tasks',
-        'method' => 'post',
+    {{ Form::model($task, [
+        'url' => route('tasks.update', $task->id),
+        'method' => 'PATCH',
     ]) }}
-    {{ Form::label('title', 'Создание новой задачи') }}
+    {{ Form::label('title', 'Изменение задачи') }}
     @include('tasks.from')
-    {{ Form::submit('Click Me!') }}
-    <a href="/"></a>
+    {{ Form::submit('Обновить!') }}
+    <a href="{{ route('tasks.show', $task->id) }}">Отмена</a>
     {{ Form::close() }}
 @endsection

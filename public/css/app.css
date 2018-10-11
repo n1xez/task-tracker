@@ -8352,3 +8352,27 @@ button.close {
     }
 }
 
+body {
+    min-height: 100vh;
+}
+
+.header {
+    background: white;
+    height: 50px;
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.navbar-left-menu {
+    background: #43465d;
+    min-height: 90vh;
+}
+
+.widget-panel {
+    margin: 20px;
+    padding: 20px;
+    background: white;
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+

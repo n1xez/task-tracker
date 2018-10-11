@@ -17,9 +17,11 @@
     </div>
     <div class="from-group">
         {{ Form::label('status_id', 'Статус') }}
-        {{ Form::text('status_id', $task->status_id, ['readonly'])  }}
+        {{ Form::text('status_id', $task->status->title, ['readonly'])  }}
     </div>
-
+    <div>
+        <a href="{{ route('tasks.edit', $task->id) }}">Редактировать</a>
+    </div>
     <div>
         <a href="/">Назад</a>
     </div>

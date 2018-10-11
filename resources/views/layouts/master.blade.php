@@ -1,9 +1,7 @@
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @include('layouts.components.meta')
 
     <title>@yield('title')</title>
 
@@ -11,15 +9,42 @@
     @include('layouts.components.styles')
 </head>
 <body>
-<div class="row">
-    <div class="col-md-3">
-        @include('layouts.components.navbar')
+<div class="container-fluid">
+    <div class="row">
+        <div class="header">
+            <div class="col-md-9">
+                <div class="navbar-header">
+                    <!-- Branding Image -->
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        {{ config('app.name', 'Laravel') }}
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-3 pull-right">
+                @include('layouts.components.login')
+            </div>
+        </div>
     </div>
-    <div class="col-md-9">
-        @include('layouts.components.login')
-        @yield('content')
+    <div class="row page-body">
+        <div class="col-md-2">
+            <div class="row navbar-left-menu">
+                @include('layouts.components.navbar')
+            </div>
+        </div>
+        <div class="col-md-10">
+            <div class="widget-panel">
+                @yield('content')
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="row">
+
+        </div>
     </div>
 </div>
+
 @include('layouts.components.scripts')
+
 </body>
 </html>

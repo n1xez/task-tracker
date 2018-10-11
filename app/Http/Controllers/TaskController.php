@@ -45,6 +45,9 @@ class TaskController extends Controller
         return view('tasks.detail', compact('task'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         return view('tasks.add');
@@ -61,16 +64,39 @@ class TaskController extends Controller
         return redirect('/')->with('success', 'cool');
     }
 
-    public function edit(Request $request)
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit($id)
     {
-        return view('tasks.edit');
+        $task = $this->task->find($id);
+        if (!$task) {
+            abort(404, 'не нашел');
+        }
+
+        return view('tasks.edit', compact('task'));
     }
 
-    public function update()
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, $id)
     {
+        $task = $this->task->find($id);
+        if (!$task) {
+            redirect()->back()->withErrors('error');
+        }
+        $task->update($request->all());
+
         return redirect()->back()->with('success', 'cool');
     }
 
+    /**
+     * @param $id
+     */
     public function destroy($id)
     {
         $task = $this->task->find($id);

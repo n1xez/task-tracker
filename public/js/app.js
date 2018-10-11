@@ -313,7 +313,7 @@
             }
 
             // Force an array if not already something iterable
-            if (typeof obj !== 'object') {
+            if (typeof obj !== 'object' && !isArray(obj)) {
                 /*eslint no-param-reassign:0*/
                 obj = [obj];
             }
@@ -840,7 +840,7 @@
                     var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
                     var response = {
                         data: responseData,
-                        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
+                        // IE sends 1223 instead of 204 (https://github.com/mzabriskie/axios/issues/201)
                         status: request.status === 1223 ? 204 : request.status,
                         statusText: request.status === 1223 ? 'No Content' : request.statusText,
                         headers: responseHeaders,
@@ -21138,6 +21138,7 @@
             var rsingleTag = (/^<([a-z][^\/\0>:\x20\t\r\n\f]*)[\x20\t\r\n\f]*\/?>(?:<\/\1>|)$/i);
 
 
+
 // Implement the identical functionality for filter and not
             function winnow(elements, qualifier, not) {
                 if (isFunction(qualifier)) {
@@ -21518,6 +21519,7 @@
                 };
             });
             var rnothtmlwhite = (/[^\x20\t\r\n\f]+/g);
+
 
 
 // Convert String-formatted options into Object-formatted ones
@@ -22158,6 +22160,8 @@
             };
 
 
+
+
 // The deferred used on DOM ready
             var readyList = jQuery.Deferred();
 
@@ -22233,6 +22237,8 @@
                 // A fallback to window.onload, that will always work
                 window.addEventListener("load", completed);
             }
+
+
 
 
 // Multifunctional method to get and set values of a collection
@@ -22478,6 +22484,7 @@
             var dataPriv = new Data();
 
             var dataUser = new Data();
+
 
 
 //	Implementation Summary
@@ -22994,6 +23001,7 @@
             var rtagName = (/<([a-z][^\/\0>\x20\t\r\n\f]+)/i);
 
             var rscriptType = (/^$|^module$|\/(?:java|ecma)script/i);
+
 
 
 // We have to close these tags to support XHTML (#13200)
@@ -26458,6 +26466,8 @@
             });
 
 
+
+
 // Return jQuery for attributes-only inclusion
 
 
@@ -26695,6 +26705,7 @@
             var nonce = Date.now();
 
             var rquery = (/\?/);
+
 
 
 // Cross-browser xml parsing
@@ -27927,6 +27938,8 @@
             });
 
 
+
+
 // Prevent auto-execution of scripts when no explicit dataType was provided (See gh-2432)
             jQuery.ajaxPrefilter(function (s) {
                 if (s.crossDomain) {
@@ -28089,6 +28102,8 @@
             });
 
 
+
+
 // Support: Safari 8 only
 // In Safari 8 documents created via document.implementation.createHTMLDocument
 // collapse sibling forms: the second one becomes a child of the first one.
@@ -28214,6 +28229,8 @@
 
                 return this;
             };
+
+
 
 
 // Attach a bunch of functions for handling common AJAX events
@@ -28600,6 +28617,8 @@
                     // subtraction forces infinities to NaN
                     !isNaN(obj - parseFloat(obj));
             };
+
+
 
 
 // Register as a named AMD module, since jQuery can be concatenated with other
@@ -31176,6 +31195,8 @@
         var utils = __webpack_require__(0);
         var InterceptorManager = __webpack_require__(28);
         var dispatchRequest = __webpack_require__(29);
+        var isAbsoluteURL = __webpack_require__(31);
+        var combineURLs = __webpack_require__(32);
 
         /**
          * Create a new instance of Axios
@@ -31206,6 +31227,11 @@
 
             config = utils.merge(defaults, this.defaults, {method: 'get'}, config);
             config.method = config.method.toLowerCase();
+
+            // Support baseURL config
+            if (config.baseURL && !isAbsoluteURL(config.url)) {
+                config.url = combineURLs(config.baseURL, config.url);
+            }
 
             // Hook up interceptors middleware
             var chain = [dispatchRequest, undefined];
@@ -31413,15 +31439,6 @@
 
         var utils = __webpack_require__(0);
 
-// Headers whose duplicates are ignored by node
-// c.f. https://nodejs.org/api/http.html#http_message_headers
-        var ignoreDuplicateOf = [
-            'age', 'authorization', 'content-length', 'content-type', 'etag',
-            'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since',
-            'last-modified', 'location', 'max-forwards', 'proxy-authorization',
-            'referer', 'retry-after', 'user-agent'
-        ];
-
         /**
          * Parse headers into an object
          *
@@ -31451,14 +31468,7 @@
                 val = utils.trim(line.substr(i + 1));
 
                 if (key) {
-                    if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) {
-                        return;
-                    }
-                    if (key === 'set-cookie') {
-                        parsed[key] = (parsed[key] ? parsed[key] : []).concat([val]);
-                    } else {
-                        parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
-                    }
+                    parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
                 }
             });
 
@@ -31724,8 +31734,6 @@
         var transformData = __webpack_require__(30);
         var isCancel = __webpack_require__(7);
         var defaults = __webpack_require__(2);
-        var isAbsoluteURL = __webpack_require__(31);
-        var combineURLs = __webpack_require__(32);
 
         /**
          * Throws a `Cancel` if cancellation has been requested.
@@ -31744,11 +31752,6 @@
          */
         module.exports = function dispatchRequest(config) {
             throwIfCancellationRequested(config);
-
-            // Support baseURL config
-            if (config.baseURL && !isAbsoluteURL(config.url)) {
-                config.url = combineURLs(config.baseURL, config.url);
-            }
 
             // Ensure headers exist
             config.headers = config.headers || {};
@@ -36043,6 +36046,8 @@
             }
 
             /*  */
+
+
 
 
 // Register the component hook to weex native render engine.
@@ -43200,6 +43205,10 @@
     /***/ (function (module, exports) {
 
         $('.m-delete').on('click', function () {
+            if (!confirm('Вы уверены что хотите удалить задачу?')) {
+                return;
+            }
+
             var element = $(this);
             var id = element.data('id');
             var type = element.data('type');

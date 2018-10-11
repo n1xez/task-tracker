@@ -12,7 +12,7 @@
 </div>
 <div class="from-group">
     {{ Form::label('status_id', 'Статус') }}
-    {{ Form::text('status_id', null)  }}
+    {{ Form::select('status_id', \App\Models\Tasks\TaskStatus::all()->pluck('title', 'id'), null) }}
 </div>
 
 
