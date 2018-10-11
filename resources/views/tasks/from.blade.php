@@ -8,7 +8,10 @@
 </div>
 <div class="from-group">
     {{ Form::label('user_id', 'Исполнитель') }}
-    {{ Form::text('user_id', null)  }}
+    {{ Form::select('user_id',
+        \App\Models\User::all()->pluck('name', 'id'),
+        Auth::check() ? Auth::id() : null )
+    }}
 </div>
 <div class="from-group">
     {{ Form::label('status_id', 'Статус') }}

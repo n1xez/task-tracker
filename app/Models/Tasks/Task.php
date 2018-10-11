@@ -2,7 +2,7 @@
 
 namespace App\Models\Tasks;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model

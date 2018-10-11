@@ -13,7 +13,11 @@
     </div>
     <div class="from-group">
         {{ Form::label('user_id', 'Исполнитель') }}
-        {{ Form::text('user_id', $task->user_id, ['readonly'])  }}
+        {{ Form::text('user_id', $task->executor->name, ['readonly'])  }}
+    </div>
+    <div class="from-group">
+        {{ Form::label('author_id', 'Автор') }}
+        {{ Form::text('author_id', $task->author->name, ['readonly'])  }}
     </div>
     <div class="from-group">
         {{ Form::label('status_id', 'Статус') }}
